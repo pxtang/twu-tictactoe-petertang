@@ -2,6 +2,7 @@ import org.junit.Before;
 import org.junit.Test;
 
 import java.io.BufferedReader;
+import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.util.ArrayList;
 
@@ -27,8 +28,8 @@ public class TicTacToeTest {
     @Before
     public void setUp() throws Exception {
         printStream = mock(PrintStream.class);
-        ticTacToe = new TicTacToe(printStream);
         inputStream = mock(BufferedReader.class);
+        ticTacToe = new TicTacToe(printStream, inputStream);
     }
 
     private void setUpMoveGridForTest() {
@@ -99,6 +100,15 @@ public class TicTacToeTest {
                 " O |   |  \n" +
                 "-----------\n" +
                 "   |   |  \n");
+    }
+
+    @Test
+    public void shouldDrawGameIfGameBoardFull() throws Exception {
+        setUpMoveGridForTest();
+        when(inputStream.readLine()).thenReturn("1", "2", "3", "4", "5", "6", "7", "8", "9");
+        ticTacToe.play();
+
+        verify(printStream).println("Game is a draw");
     }
 
 

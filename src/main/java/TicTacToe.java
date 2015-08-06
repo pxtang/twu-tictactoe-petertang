@@ -17,38 +17,51 @@ public class TicTacToe {
     private final int SPOTS_IN_ROW = 3;
 
     private PrintStream printStream;
+    private BufferedReader bufferedReader;
     private List<String> moveGrid;
     private Player player1;
     private Player player2;
 
-    public TicTacToe(PrintStream printStream) {
+    private int emptySpots;
+
+    public TicTacToe(PrintStream printStream, BufferedReader inputStream) {
 
         this.printStream = printStream;
+        this.bufferedReader = inputStream;
+        emptySpots = 9;
+
+        moveGrid = new ArrayList<>();
+        setUpMoveGrid(moveGrid);
+        player1 = new Player(moveGrid,System.out, inputStream, 1);
+        player2 = new Player(moveGrid,System.out, inputStream, 2);
     }
 
     public void start() {
-        moveGrid = new ArrayList<>();
-        setUpMoveGrid(moveGrid);
-        BufferedReader inputStream = new BufferedReader(new InputStreamReader(System.in));
-        player1 = new Player(moveGrid,System.out, inputStream, 1);
-        player2 = new Player(moveGrid,System.out, inputStream, 2);
-
         printStream.print(produceBoard(moveGrid));
     }
 
     public void play() {
-        update(moveGrid, player1);
-        update(moveGrid, player2);
+        while(emptySpots > 0) {
+            update(moveGrid, player1);
+            if (emptySpots > 0) {
+                update(moveGrid, player2);
+            }
+        }
+
+        if (emptySpots == 0) {
+            printStream.println("Game is a draw");
+        }
     }
 
     public void update(List<String> moveGrid, Player player1) {
         player1.prompt();
         player1.move();
+        emptySpots--;
         printStream.print(produceBoard(moveGrid));
     }
 
     private void setUpMoveGrid(List<String> moveGrid) {
-        for (int i = 0; i < 9; i++) {
+        for (int i = 0; i < emptySpots; i++) {
             moveGrid.add(new String(" "));
         }
     }

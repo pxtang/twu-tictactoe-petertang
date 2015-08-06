@@ -22,7 +22,7 @@ public class Player {
     }
 
     public void prompt() {
-        printStream.printf("Player %d, please enter a number between 1 and 9 to move.",number);
+        printStream.printf("Player %d, please enter a number between 1 and 9 to move.", number);
     }
 
     public void move() {
