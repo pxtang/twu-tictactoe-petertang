@@ -30,8 +30,8 @@ public class TicTacToe {
         this.moveGrid = moveGrid;
         MoveGridSetup.prepare(this.moveGrid);
         boardDrawer = new BoardDrawer(this.moveGrid, printStream);
-        player1 = new Player(this.moveGrid,System.out, inputStream, 1);
-        player2 = new Player(this.moveGrid,System.out, inputStream, 2);
+        player1 = new Player(this.moveGrid,printStream, inputStream, 1);
+        player2 = new Player(this.moveGrid,printStream, inputStream, 2);
 //        player2 = new CountingAI(this.moveGrid,System.out, 2);
     }
 
