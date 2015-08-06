@@ -50,7 +50,7 @@ public class PlayerTest {
     public void shouldPromptPlayer1MoveWhenPlayer1Turn() {
         setUpPlayer1();
         player1.prompt();
-        verify(printStream).print("Player 1, please enter a number between 1 and 9 to move.");
+        verify(printStream).printf("Player %d, please enter a number between 1 and 9 to move.",1);
     }
 
     @Test
@@ -81,5 +81,15 @@ public class PlayerTest {
 
         assertThat(moveGrid.get(4), is("O"));
 
+    }
+
+    @Test
+    public void shouldSayInvalidLocationWhenPlayer1MovesInGrid2WhenGrid2Taken() throws Exception {
+        setUpPlayer1();
+        moveGrid.set(1,"X");
+        when(inputStream.readLine()).thenReturn("2","1");
+        player1.move();
+
+        verify(printStream).println("Location already taken, try again");
     }
 }

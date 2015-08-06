@@ -22,18 +22,28 @@ public class Player {
     }
 
     public void prompt() {
-        printStream.print("Player 1, please enter a number between 1 and 9 to move.");
+        printStream.printf("Player %d, please enter a number between 1 and 9 to move.",number);
     }
 
     public void move() {
         String move = "";
-        try {
-            move = inputStream.readLine();
-        } catch (IOException e) {
-            e.printStackTrace();
-        }
+        int moveIndex = 0;
+        boolean isNotValidMove = true;
+        while (isNotValidMove) {
+            try {
+                move = inputStream.readLine();
+            } catch (IOException e) {
+                e.printStackTrace();
+            }
 
-        int moveIndex = Integer.parseInt(move) - 1;
+            moveIndex = Integer.parseInt(move) - 1;
+
+            if (moveGrid.get(moveIndex).equals(" ")) {
+                isNotValidMove = false;
+            } else {
+                printStream.println("Location already taken, try again");
+            }
+        }
 
         moveGrid.set(moveIndex, number == 1 ? "X" : "O");
     }
