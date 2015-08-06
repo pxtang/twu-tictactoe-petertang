@@ -53,16 +53,16 @@ public class TicTacToe {
         }
     }
 
-    public void update(List<String> moveGrid, Player player1) {
-        player1.prompt();
-        player1.move();
+    public void update(List<String> moveGrid, Player player) {
+        player.prompt();
+        player.move();
         emptySpots--;
         printStream.print(produceBoard(moveGrid));
     }
 
     private void setUpMoveGrid(List<String> moveGrid) {
         for (int i = 0; i < emptySpots; i++) {
-            moveGrid.add(new String(" "));
+            moveGrid.add(" ");
         }
     }
 
