@@ -8,11 +8,13 @@ import java.util.List;
  */
 public class Player {
     private static List<String> moveGrid;
+    private Integer number;
     private PrintStream printStream;
     private BufferedReader inputStream;
 
 
-    public Player(List<String> moveGrid, PrintStream printStream, BufferedReader inputStream) {
+    public Player(List<String> moveGrid, PrintStream printStream, BufferedReader inputStream, Integer number) {
+        this.number = number;
         this.moveGrid = moveGrid;
 
         this.printStream = printStream;
@@ -33,6 +35,6 @@ public class Player {
 
         int moveIndex = Integer.parseInt(move) - 1;
 
-        moveGrid.set(moveIndex, "X");
+        moveGrid.set(moveIndex, number == 1 ? "X" : "O");
     }
 }

@@ -19,7 +19,7 @@ import static org.mockito.Mockito.when;
 public class PlayerTest {
 
     private PrintStream printStream;
-    private Player player1;
+    private Player player1, player2;
     private List<String> moveGrid;
     private BufferedReader inputStream;
 
@@ -28,7 +28,14 @@ public class PlayerTest {
         printStream = mock(PrintStream.class);
         inputStream = mock(BufferedReader.class);
         setUpMoveGridForTest();
-        player1 = new Player(moveGrid,printStream,inputStream);
+    }
+
+    private void setUpPlayer1() {
+        player1 = new Player(moveGrid,printStream,inputStream, 1);
+    }
+
+    private void setUpPlayer2() {
+        player2 = new Player(moveGrid,printStream,inputStream, 2);
     }
 
     private void setUpMoveGridForTest() {
@@ -41,12 +48,14 @@ public class PlayerTest {
 
     @Test
     public void shouldPromptPlayer1MoveWhenPlayer1Turn() {
+        setUpPlayer1();
         player1.prompt();
         verify(printStream).print("Player 1, please enter a number between 1 and 9 to move.");
     }
 
     @Test
-    public void shouldStorePlayer1MoveInGrid0WhenPlayer1InputsMoveOf1() throws IOException {
+    public void shouldStorePlayer1MoveInGridIndex0WhenPlayer1InputsMoveOf1() throws IOException {
+        setUpPlayer1();
         when(inputStream.readLine()).thenReturn("1");
         player1.move();
 
@@ -55,11 +64,22 @@ public class PlayerTest {
     }
 
     @Test
-    public void shouldStorePlayer1MoveInGrid1WhenPlayer1InputsMoveOf2() throws IOException {
+    public void shouldStorePlayer1MoveInGridIndex1WhenPlayer1InputsMoveOf2() throws IOException {
+        setUpPlayer1();
         when(inputStream.readLine()).thenReturn("2");
         player1.move();
 
         assertThat(moveGrid.get(1), is("X"));
+
+    }
+
+    @Test
+    public void shouldStorePlayer2MoveInGridIndex4WhenPlayer2InputsMoveOf5() throws IOException {
+        setUpPlayer2();
+        when(inputStream.readLine()).thenReturn("5");
+        player2.move();
+
+        assertThat(moveGrid.get(4), is("O"));
 
     }
 }

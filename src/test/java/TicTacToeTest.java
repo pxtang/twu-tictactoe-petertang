@@ -20,11 +20,15 @@ public class TicTacToeTest {
     private PrintStream printStream;
     private TicTacToe ticTacToe;
     private ArrayList<String> moveGrid;
+    private BufferedReader inputStream;
+    private Player player1;
+    private Player player2;
 
     @Before
     public void setUp() throws Exception {
         printStream = mock(PrintStream.class);
         ticTacToe = new TicTacToe(printStream);
+        inputStream = mock(BufferedReader.class);
     }
 
     private void setUpMoveGridForTest() {
@@ -32,6 +36,14 @@ public class TicTacToeTest {
         for (int i = 0; i < 9; i++) {
             moveGrid.add(new String(" "));
         }
+    }
+
+    private void setUpPlayer1() {
+        player1 = new Player(moveGrid,printStream, inputStream, 1);
+    }
+
+    private void setUpPlayer2() {
+        player2 = new Player(moveGrid,printStream, inputStream, 2);
     }
 
     @Test
@@ -48,10 +60,8 @@ public class TicTacToeTest {
 
     @Test
     public void shouldDrawBoardWithXInSpot5IfPlayer1Inputs5() throws Exception {
-        moveGrid = new ArrayList<>();
         setUpMoveGridForTest();
-        BufferedReader inputStream = mock(BufferedReader.class);
-        Player player1 = new Player(moveGrid,printStream,inputStream);
+        setUpPlayer1();
         when(inputStream.readLine()).thenReturn("5");
         ticTacToe.update(moveGrid, player1);
 
@@ -64,10 +74,9 @@ public class TicTacToeTest {
 
     @Test
     public void shouldDrawBoardWithXInSpot9IfPlayer1Inputs9() throws Exception {
-        moveGrid = new ArrayList<>();
         setUpMoveGridForTest();
-        BufferedReader inputStream = mock(BufferedReader.class);
-        Player player1 = new Player(moveGrid,printStream,inputStream);
+        setUpPlayer1();
+
         when(inputStream.readLine()).thenReturn("9");
         ticTacToe.update(moveGrid, player1);
 
@@ -76,6 +85,20 @@ public class TicTacToeTest {
                                     "   |   |  \n" +
                                     "-----------\n" +
                                     "   |   | X\n");
+    }
+
+    @Test
+    public void shouldDrawBoardWithOInSpot4IfPlayer2Inputs4() throws Exception {
+        setUpMoveGridForTest();
+        setUpPlayer2();
+        when(inputStream.readLine()).thenReturn("4");
+        ticTacToe.update(moveGrid, player2);
+
+        verify(printStream).print(  "   |   |  \n" +
+                "-----------\n" +
+                " O |   |  \n" +
+                "-----------\n" +
+                "   |   |  \n");
     }
 
 

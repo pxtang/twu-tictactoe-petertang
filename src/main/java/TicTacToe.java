@@ -19,6 +19,7 @@ public class TicTacToe {
     private PrintStream printStream;
     private List<String> moveGrid;
     private Player player1;
+    private Player player2;
 
     public TicTacToe(PrintStream printStream) {
 
@@ -29,13 +30,15 @@ public class TicTacToe {
         moveGrid = new ArrayList<>();
         setUpMoveGrid(moveGrid);
         BufferedReader inputStream = new BufferedReader(new InputStreamReader(System.in));
-        player1 = new Player(moveGrid,System.out, inputStream);
+        player1 = new Player(moveGrid,System.out, inputStream, 1);
+        player2 = new Player(moveGrid,System.out, inputStream, 2);
 
         printStream.print(produceBoard(moveGrid));
     }
 
     public void play() {
         update(moveGrid, player1);
+        update(moveGrid, player2);
     }
 
     public void update(List<String> moveGrid, Player player1) {
