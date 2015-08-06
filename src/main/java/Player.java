@@ -11,6 +11,7 @@ public class Player {
     private Integer number;
     protected PrintStream printStream;
     private BufferedReader inputStream;
+    protected String moveToken;
 
 
     public Player(List<String> moveGrid, PrintStream printStream, BufferedReader inputStream, Integer number) {
@@ -19,6 +20,8 @@ public class Player {
 
         this.printStream = printStream;
         this.inputStream = inputStream;
+
+        moveToken = number == 1 ? "X" : "O";
     }
 
     public void prompt() {
@@ -49,6 +52,6 @@ public class Player {
     }
 
     public void move(int moveIndex) {
-        moveGrid.set(moveIndex, number == 1 ? "X" : "O");
+        moveGrid.set(moveIndex, moveToken);
     }
 }

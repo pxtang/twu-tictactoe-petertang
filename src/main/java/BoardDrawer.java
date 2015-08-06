@@ -11,7 +11,7 @@ public class BoardDrawer {
     private final String BOARD_LINE = "-----------\n";
     private final int MAX_BOARD_ROWS = 5;
 
-    private List<String> moveGrid;
+    private List<String> moveGrid; // I know I could have used a normal array, but got too far before realizing it :(
     private PrintStream printStream;
 
     public BoardDrawer(List<String> moveGrid, PrintStream printStream) {

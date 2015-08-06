@@ -10,8 +10,7 @@ import java.util.List;
  * @author ptang, @date 8/6/15 1:21 PM
  */
 public class TicTacToe {
-    private static final int NUM_COLUMNS = 3;
-    private static final int NUM_ROWS = 3;
+    private static final int DIMENSION_NUM = 3;
 
     private PrintStream printStream;
     private BufferedReader bufferedReader;
@@ -74,13 +73,13 @@ public class TicTacToe {
     }
 
     private boolean checkWin(int lastMove) { // uses array indices
-        int columnNumber = lastMove % NUM_COLUMNS;
+        int columnNumber = lastMove % DIMENSION_NUM;
         String[] movesInColumn = {moveGrid.get(columnNumber), moveGrid.get(columnNumber+3), moveGrid.get(columnNumber+6)};
         if (checkMoveSet(movesInColumn)) {
             return true;
         }
 
-        int rowNumber = lastMove / NUM_ROWS;
+        int rowNumber = lastMove / DIMENSION_NUM;
         int rowStartIndex = rowNumber * 3;
         String[] movesInRow = {moveGrid.get(rowStartIndex), moveGrid.get(rowStartIndex+1), moveGrid.get(rowStartIndex+2)};
         if (checkMoveSet(movesInRow)) {
