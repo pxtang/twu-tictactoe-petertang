@@ -106,7 +106,8 @@ public class TicTacToe {
 
     public int update(List<String> moveGrid, Player player) {
         player.prompt();
-        int lastMove = player.move();
+        int lastMove = player.inputMove();
+        player.move(lastMove);
         emptySpots--;
         boardDrawer.draw();
         return lastMove;
