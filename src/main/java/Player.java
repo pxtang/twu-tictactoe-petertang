@@ -7,9 +7,9 @@ import java.util.List;
  * Created by ptang on 8/6/15.
  */
 public class Player {
-    private static List<String> moveGrid;
+    protected static List<String> moveGrid;
     private Integer number;
-    private PrintStream printStream;
+    protected PrintStream printStream;
     private BufferedReader inputStream;
 
 
