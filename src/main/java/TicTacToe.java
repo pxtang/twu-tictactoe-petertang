@@ -1,5 +1,4 @@
 import java.io.BufferedReader;
-import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.util.ArrayList;
 import java.util.List;
@@ -11,10 +10,11 @@ import java.util.List;
  * @author ptang, @date 8/6/15 1:21 PM
  */
 public class TicTacToe {
+    private static final int NUM_COLUMNS = 3;
+    private static final int NUM_ROWS = 3;
     private final String BOARD_ROW = " %s | %s | %s\n";
     private final String BOARD_LINE = "-----------\n";
     private final int MAX_BOARD_ROWS = 5;
-    private final int SPOTS_IN_ROW = 3;
 
     private PrintStream printStream;
     private BufferedReader bufferedReader;
@@ -41,23 +41,76 @@ public class TicTacToe {
     }
 
     public void play() {
-        while(emptySpots > 0) {
-            update(moveGrid, player1);
+        boolean hasWinner = false;
+        int lastMove;
+        int winnerNum = 0;
+        while(emptySpots > 0 && !hasWinner) {
+            lastMove = update(moveGrid, player1);
+            hasWinner = checkWin(lastMove);
+            if (hasWinner) {
+                winnerNum = 1;
+                break;
+            }
+
             if (emptySpots > 0) {
-                update(moveGrid, player2);
+                lastMove = update(moveGrid, player2);
+                hasWinner = checkWin(lastMove);
+                if (hasWinner) {
+                    winnerNum = 2;
+                    break;
+                }
             }
         }
 
-        if (emptySpots == 0) {
+        if (winnerNum == 0) {
             printStream.println("Game is a draw");
+        } else {
+            printStream.println("Player " + winnerNum + " Wins!");
         }
     }
 
-    public void update(List<String> moveGrid, Player player) {
+    private boolean checkMoveSet(String[] moves) {
+        return moves[0].equals(moves[1]) && moves[0].equals(moves[2]);
+    }
+
+    private boolean checkWin(int lastMove) { // uses array indices
+        int columnNumber = lastMove % NUM_COLUMNS;
+        String[] movesInColumn = {moveGrid.get(columnNumber), moveGrid.get(columnNumber+3), moveGrid.get(columnNumber+6)};
+        if (checkMoveSet(movesInColumn)) {
+            return true;
+        }
+
+        int rowNumber = lastMove / NUM_ROWS;
+        int rowStartIndex = rowNumber * 3;
+        String[] movesInRow = {moveGrid.get(rowStartIndex), moveGrid.get(rowStartIndex+1), moveGrid.get(rowStartIndex+2)};
+        if (checkMoveSet(movesInRow)) {
+            return true;
+        }
+
+        if (lastMove % 2 == 0) { // on a diagonal
+            if (lastMove % 4 == 0) {
+                String[] movesInSEDiagonal = {moveGrid.get(0), moveGrid.get(4), moveGrid.get(8)};
+                if (checkMoveSet(movesInSEDiagonal)) {
+                    return true;
+                }
+            } else if (lastMove == 2 || lastMove == 4 || lastMove == 6) {
+                String[] movesInSWDiagonal = {moveGrid.get(2), moveGrid.get(4), moveGrid.get(6)};
+                if (checkMoveSet(movesInSWDiagonal)) {
+                    return true;
+                }
+            }
+
+        }
+
+        return false;
+    }
+
+    public int update(List<String> moveGrid, Player player) {
         player.prompt();
-        player.move();
+        int lastMove = player.move();
         emptySpots--;
         printStream.print(produceBoard(moveGrid));
+        return lastMove;
     }
 
     private void setUpMoveGrid(List<String> moveGrid) {
@@ -82,8 +135,8 @@ public class TicTacToe {
     private String produceRow(List<String> moveGrid, int rowNumber) {
         rowNumber /= 2;
         return String.format(BOARD_ROW,
-                moveGrid.get(rowNumber*SPOTS_IN_ROW),
-                moveGrid.get(rowNumber*SPOTS_IN_ROW + 1),
-                moveGrid.get(rowNumber*SPOTS_IN_ROW + 2));
+                moveGrid.get(rowNumber* NUM_COLUMNS),
+                moveGrid.get(rowNumber* NUM_COLUMNS + 1),
+                moveGrid.get(rowNumber* NUM_COLUMNS + 2));
     }
 }

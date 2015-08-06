@@ -22,10 +22,10 @@ public class Player {
     }
 
     public void prompt() {
-        printStream.printf("Player %d, please enter a number between 1 and 9 to move.", number);
+        printStream.printf("Player %d, please enter a number between 1 and 9 to move.\n", number);
     }
 
-    public void move() {
+    public int move() {
         String move = "";
         int moveIndex = 0;
         boolean isNotValidMove = true;
@@ -46,5 +46,7 @@ public class Player {
         }
 
         moveGrid.set(moveIndex, number == 1 ? "X" : "O");
+
+        return moveIndex;
     }
 }

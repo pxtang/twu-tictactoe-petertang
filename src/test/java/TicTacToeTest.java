@@ -6,6 +6,7 @@ import java.io.InputStreamReader;
 import java.io.PrintStream;
 import java.util.ArrayList;
 
+import static org.hamcrest.MatcherAssert.assertThat;
 import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
@@ -103,13 +104,49 @@ public class TicTacToeTest {
     }
 
     @Test
-    public void shouldDrawGameIfGameBoardFull() throws Exception {
+    public void shouldSayGameIsDrawWhenGameBoardFull() throws Exception {
         setUpMoveGridForTest();
-        when(inputStream.readLine()).thenReturn("1", "2", "3", "4", "5", "6", "7", "8", "9");
+        when(inputStream.readLine()).thenReturn("1", "2", "3", "5", "4", "7", "6", "9", "8");
         ticTacToe.play();
 
         verify(printStream).println("Game is a draw");
     }
 
+    @Test
+    public void shouldPlayer1WinWhenThreeInARow() throws Exception {
+        setUpMoveGridForTest();
+        when(inputStream.readLine()).thenReturn("1", "4", "2", "5", "3");
+        ticTacToe.play();
 
+        verify(printStream).println("Player " + 1 + " Wins!");
+
+    }
+
+    @Test
+    public void shouldPlayer2WinWhenThreeInACol() throws Exception {
+        setUpMoveGridForTest();
+        when(inputStream.readLine()).thenReturn("1", "2", "3", "5", "4","8");
+        ticTacToe.play();
+
+        verify(printStream).println("Player " + 2 + " Wins!");
+
+    }
+
+    @Test
+    public void shouldPlayer1WinWhenThreeInASWDiag() throws Exception {
+        setUpMoveGridForTest();
+        when(inputStream.readLine()).thenReturn("1", "2", "5", "3", "9");
+        ticTacToe.play();
+
+        verify(printStream).println("Player " + 1 + " Wins!");
+    }
+
+    @Test
+    public void shouldPlayer2WinWhenThreeInASEDiag() throws Exception {
+        setUpMoveGridForTest();
+        when(inputStream.readLine()).thenReturn("1", "3", "2", "5", "4","7");
+        ticTacToe.play();
+
+        verify(printStream).println("Player " + 2 + " Wins!");
+    }
 }
