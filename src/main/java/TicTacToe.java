@@ -29,11 +29,11 @@ public class TicTacToe {
         emptySpots = 9;
 
         this.moveGrid = moveGrid;
-        setUpMoveGrid(this.moveGrid);
+        MoveGridSetup.prepare(this.moveGrid);
         boardDrawer = new BoardDrawer(this.moveGrid, printStream);
         player1 = new Player(this.moveGrid,System.out, inputStream, 1);
-//        player2 = new Player(this.moveGrid,System.out, inputStream, 2);
-        player2 = new CountingAI(this.moveGrid,System.out, 2);
+        player2 = new Player(this.moveGrid,System.out, inputStream, 2);
+//        player2 = new CountingAI(this.moveGrid,System.out, 2);
     }
 
     public void start() {
@@ -112,12 +112,6 @@ public class TicTacToe {
         emptySpots--;
         boardDrawer.draw();
         return lastMove;
-    }
-
-    private void setUpMoveGrid(List<String> moveGrid) {
-        for (int i = 0; i < emptySpots; i++) {
-            moveGrid.add(" ");
-        }
     }
 
 }

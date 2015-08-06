@@ -20,16 +20,11 @@ public class BoardDrawerTest {
     private BoardDrawer boardDrawer;
 
 
-    private void setUpMoveGridForTest() {
-        for (int i = 0; i < 9; i++) {
-            moveGrid.add(" ");
-        }
-    }
 
     @Before
     public void setUp() throws Exception {
         moveGrid = new ArrayList<>();
-        setUpMoveGridForTest();
+        MoveGridSetup.prepare(moveGrid);
         printStream = mock(PrintStream.class);
         boardDrawer = new BoardDrawer(moveGrid, printStream);
     }
@@ -49,7 +44,6 @@ public class BoardDrawerTest {
 
     @Test
     public void shouldDrawBoardWithXInSpot5IfGridIndex4FilledWithX() throws Exception {
-        setUpMoveGridForTest();
         moveGrid.set(4, "X");
 
         boardDrawer.draw();
@@ -63,7 +57,6 @@ public class BoardDrawerTest {
 
     @Test
     public void shouldDrawBoardWithXInSpot9IfGridIndex8FilledWithX() throws Exception {
-        setUpMoveGridForTest();
         moveGrid.set(8, "X");
         boardDrawer.draw();
 
@@ -76,7 +69,6 @@ public class BoardDrawerTest {
 
     @Test
     public void shouldDrawBoardWithOInSpot4IfIfGridIndex3FilledWithO() throws Exception {
-        setUpMoveGridForTest();
         moveGrid.set(3, "O");
         boardDrawer.draw();
 

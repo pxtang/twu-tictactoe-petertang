@@ -25,13 +25,14 @@ public class CountingAITest {
 
     @Before
     public void setUp() {
-        setUpMoveGridForTest();
+        moveGrid = new ArrayList<>();
+        MoveGridSetup.prepare(moveGrid);
+
         printStream = mock(PrintStream.class);
         countingAI = new CountingAI(moveGrid, printStream,1);
     }
 
     private void setUpMoveGridForTest() {
-        moveGrid = new ArrayList<>();
         for (int i = 0; i < 9; i++) {
             moveGrid.add(" ");
         }

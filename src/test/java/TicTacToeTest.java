@@ -32,13 +32,8 @@ public class TicTacToeTest {
         printStream = mock(PrintStream.class);
         inputStream = mock(BufferedReader.class);
         moveGrid = new ArrayList<>();
+        MoveGridSetup.prepare(moveGrid);
         ticTacToe = new TicTacToe(printStream, inputStream, moveGrid);
-    }
-
-    private void setUpMoveGridForTest() {
-        for (int i = 0; i < 9; i++) {
-            moveGrid.add(" ");
-        }
     }
 
     private void setUpPlayer1() {
@@ -51,7 +46,6 @@ public class TicTacToeTest {
 
     @Test
     public void shouldDrawBoardWithXInSpot5IfPlayer1Inputs5() throws IOException {
-        setUpMoveGridForTest();
         setUpPlayer1();
         when(inputStream.readLine()).thenReturn("5");
         ticTacToe.update(moveGrid, player1);
@@ -65,7 +59,6 @@ public class TicTacToeTest {
 
     @Test
     public void shouldDrawBoardWithXInSpot9IfPlayer1Inputs9() throws IOException {
-        setUpMoveGridForTest();
         setUpPlayer1();
 
         when(inputStream.readLine()).thenReturn("9");
@@ -80,7 +73,6 @@ public class TicTacToeTest {
 
     @Test
     public void shouldDrawBoardWithOInSpot4IfPlayer2Inputs4() throws IOException {
-        setUpMoveGridForTest();
         setUpPlayer2();
         when(inputStream.readLine()).thenReturn("4");
         ticTacToe.update(moveGrid, player2);
@@ -94,7 +86,6 @@ public class TicTacToeTest {
 
     @Test
     public void shouldSayGameIsDrawWhenGameBoardFull() throws IOException {
-        setUpMoveGridForTest();
         when(inputStream.readLine()).thenReturn("1", "2", "3", "5", "4", "7", "6", "9", "8");
         ticTacToe.play();
 
@@ -103,7 +94,6 @@ public class TicTacToeTest {
 
     @Test
     public void shouldPlayer1WinWhenThreeInARow() throws IOException {
-        setUpMoveGridForTest();
         when(inputStream.readLine()).thenReturn("1", "4", "2", "5", "3");
         ticTacToe.play();
 
@@ -113,7 +103,6 @@ public class TicTacToeTest {
 
     @Test
     public void shouldPlayer2WinWhenThreeInACol() throws IOException {
-        setUpMoveGridForTest();
         when(inputStream.readLine()).thenReturn("1", "2", "3", "5", "4","8");
         ticTacToe.play();
 
@@ -123,7 +112,6 @@ public class TicTacToeTest {
 
     @Test
     public void shouldPlayer1WinWhenThreeInASWDiag() throws IOException {
-        setUpMoveGridForTest();
         when(inputStream.readLine()).thenReturn("1", "2", "5", "3", "9");
         ticTacToe.play();
 
@@ -132,7 +120,6 @@ public class TicTacToeTest {
 
     @Test
     public void shouldPlayer2WinWhenThreeInASEDiag() throws IOException {
-        setUpMoveGridForTest();
         when(inputStream.readLine()).thenReturn("1", "3", "2", "5", "4","7");
         ticTacToe.play();
 

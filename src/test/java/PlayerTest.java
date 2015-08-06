@@ -27,7 +27,8 @@ public class PlayerTest {
     public void setUp() throws Exception {
         printStream = mock(PrintStream.class);
         inputStream = mock(BufferedReader.class);
-        setUpMoveGridForTest();
+        moveGrid = new ArrayList<>();
+        MoveGridSetup.prepare(moveGrid);
     }
 
     private void setUpPlayer1() {
@@ -36,13 +37,6 @@ public class PlayerTest {
 
     private void setUpPlayer2() {
         player2 = new Player(moveGrid,printStream,inputStream, 2);
-    }
-
-    private void setUpMoveGridForTest() {
-        moveGrid = new ArrayList<>();
-        for (int i = 0; i < 9; i++) {
-            moveGrid.add(" ");
-        }
     }
 
 
