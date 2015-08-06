@@ -30,13 +30,13 @@ public class TicTacToeTest {
     public void setUp() throws Exception {
         printStream = mock(PrintStream.class);
         inputStream = mock(BufferedReader.class);
-        ticTacToe = new TicTacToe(printStream, inputStream);
+        moveGrid = new ArrayList<>();
+        ticTacToe = new TicTacToe(printStream, inputStream, moveGrid);
     }
 
     private void setUpMoveGridForTest() {
-        moveGrid = new ArrayList<>();
         for (int i = 0; i < 9; i++) {
-            moveGrid.add(new String(" "));
+            moveGrid.add(" ");
         }
     }
 
@@ -46,18 +46,6 @@ public class TicTacToeTest {
 
     private void setUpPlayer2() {
         player2 = new Player(moveGrid,printStream, inputStream, 2);
-    }
-
-    @Test
-    public void shouldDrawBoardWhenStart() throws Exception {
-        ticTacToe.start();
-
-        verify(printStream).print(  "   |   |  \n" +
-                                    "-----------\n" +
-                                    "   |   |  \n" +
-                                    "-----------\n" +
-                                    "   |   |  \n");
-
     }
 
     @Test

@@ -12,9 +12,6 @@ import java.util.List;
 public class TicTacToe {
     private static final int NUM_COLUMNS = 3;
     private static final int NUM_ROWS = 3;
-    private final String BOARD_ROW = " %s | %s | %s\n";
-    private final String BOARD_LINE = "-----------\n";
-    private final int MAX_BOARD_ROWS = 5;
 
     private PrintStream printStream;
     private BufferedReader bufferedReader;
@@ -23,21 +20,23 @@ public class TicTacToe {
     private Player player2;
 
     private int emptySpots;
+    private BoardDrawer boardDrawer;
 
-    public TicTacToe(PrintStream printStream, BufferedReader inputStream) {
+    public TicTacToe(PrintStream printStream, BufferedReader inputStream, ArrayList<String> moveGrid) {
 
         this.printStream = printStream;
         this.bufferedReader = inputStream;
         emptySpots = 9;
 
-        moveGrid = new ArrayList<>();
-        setUpMoveGrid(moveGrid);
-        player1 = new Player(moveGrid,System.out, inputStream, 1);
-        player2 = new Player(moveGrid,System.out, inputStream, 2);
+        this.moveGrid = moveGrid;
+        setUpMoveGrid(this.moveGrid);
+        boardDrawer = new BoardDrawer(this.moveGrid, printStream);
+        player1 = new Player(this.moveGrid,System.out, inputStream, 1);
+        player2 = new Player(this.moveGrid,System.out, inputStream, 2);
     }
 
     public void start() {
-        printStream.print(produceBoard(moveGrid));
+        boardDrawer.draw();
     }
 
     public void play() {
@@ -109,7 +108,7 @@ public class TicTacToe {
         player.prompt();
         int lastMove = player.move();
         emptySpots--;
-        printStream.print(produceBoard(moveGrid));
+        boardDrawer.draw();
         return lastMove;
     }
 
@@ -119,24 +118,4 @@ public class TicTacToe {
         }
     }
 
-    private String produceBoard(List<String> moveGrid) {
-        String board = "";
-        for (int i = 0; i < MAX_BOARD_ROWS; i++) {
-            if (i % 2 == 0) {
-                board += produceRow(moveGrid,i);
-            } else {
-                board += BOARD_LINE;
-            }
-        }
-
-        return board;
-    }
-
-    private String produceRow(List<String> moveGrid, int rowNumber) {
-        rowNumber /= 2;
-        return String.format(BOARD_ROW,
-                moveGrid.get(rowNumber* NUM_COLUMNS),
-                moveGrid.get(rowNumber* NUM_COLUMNS + 1),
-                moveGrid.get(rowNumber* NUM_COLUMNS + 2));
-    }
 }

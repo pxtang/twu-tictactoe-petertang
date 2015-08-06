@@ -50,7 +50,7 @@ public class PlayerTest {
     public void shouldPromptPlayer1MoveWhenPlayer1Turn() {
         setUpPlayer1();
         player1.prompt();
-        verify(printStream).printf("Player %d, please enter a number between 1 and 9 to move.",1);
+        verify(printStream).printf("Player %d, please enter a number between 1 and 9 to move.\n",1);
     }
 
     @Test
